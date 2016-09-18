@@ -1,4 +1,4 @@
-package com.example.carolyn.myapplication;
+package com.corp.druck.grocr;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

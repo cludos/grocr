@@ -1,4 +1,4 @@
-package com.example.carolyn.myapplication;
+package com.corp.druck.grocr;
 
 import org.junit.Test;
 
