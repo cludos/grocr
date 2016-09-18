@@ -1,6 +1,5 @@
 package com.corp.druck.grocr;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Calendar;
 /**
@@ -24,12 +23,21 @@ public class GroceryList {
      * @param daysLeft
      */
     public void addGrocery(String name,int daysLeft){
-        fridge.add(new Grocery(name,daysLeft,new Date()));
+        fridge.add(new Grocery(name,daysLeft,calendar.DAY_OF_YEAR));
     }
 
+    /**
+     * Updates the date
+     */
     public void update(){
         int daysElapsed = calendar.DAY_OF_MONTH-lastDay;
         lastDay = calendar.DAY_OF_MONTH;
+        for (Grocery g : fridge){
+            g.decreaseDaysLeft(daysElapsed);
+        }
     }
 
+    public void remove(int index){
+        fridge.remove(index);
+    }
 }
