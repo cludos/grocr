@@ -6,14 +6,14 @@ import java.util.Date;
 public class Grocery {
     private String name;
     private int daysLeft;
-    private Date date;
+    private int date;
 
     /** Creates a new grocery item
      * @param name of Grocery
      * @param daysLeft till spoiled
      * @param date when bought
      */
-    public Grocery(String name, int daysLeft, Date date){
+    public Grocery(String name, int daysLeft, int date){
         this.name = name;
         this.daysLeft = daysLeft;
         this.date = date;
@@ -27,7 +27,7 @@ public class Grocery {
         return name;
     }
 
-    public Date getDate(){
+    public int getDate(){
         return date;
     }
 
