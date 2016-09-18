@@ -1,85 +1,27 @@
 package com.corp.druck.grocr;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ExpandableListView;
-import android.widget.SimpleExpandableListAdapter;
-import android.widget.Toast;
+import android.widget.EditText;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final String NAME = "NAME";
-
-    private SimpleExpandableListAdapter mAdapter;
-    ExpandableListView simpleExpandableListView;
-    // string arrays for group and child items
-    private String groupItems[] = {"Days"};
-    private String[] childItems = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-
+    private GroceryList groceryList;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //  initiate the expandable list view
-        simpleExpandableListView = (ExpandableListView) findViewById(R.id.expiration_date_list);
-        // create lists for group and child items
-        List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
-        List<List<Map<String, String>>> childData = new ArrayList<List<Map<String, String>>>();
-        // add data in group and child list
-        for (int i = 0; i < groupItems.length; i++) {
-            Map<String, String> curGroupMap = new HashMap<String, String>();
-            groupData.add(curGroupMap);
-            curGroupMap.put(NAME, groupItems[i]);
+        groceryList = new GroceryList();
+    }
 
-            List<Map<String, String>> children = new ArrayList<Map<String, String>>();
-            for (int j = 0; j < childItems.length; j++) {
-                Map<String, String> curChildMap = new HashMap<String, String>();
-                children.add(curChildMap);
-                curChildMap.put(NAME, childItems[j]);
-            }
-            childData.add(children);
-        }
-        // define arrays for displaying data in Expandable list view
-        String groupFrom[] = {NAME};
-        int groupTo[] = {R.id.heading};
-        String childFrom[] = {NAME};
-        int childTo[] = {R.id.childItem};
-
-
-        // Set up the adapter
-        mAdapter = new SimpleExpandableListAdapter(this, groupData,
-                R.layout.expandable_list_group_names,
-                groupFrom, groupTo,
-                childData, R.layout.expandable_list_child_names,
-                childFrom, childTo);
-        simpleExpandableListView.setAdapter(mAdapter);
-
-        // perform set on group click listener event
-        simpleExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-
-                // display a toast with group name whenever a user clicks on a group item
-                Toast.makeText(getApplicationContext(), "Group Name Is :" + groupItems[groupPosition], Toast.LENGTH_LONG).show();
-
-                return false;
-            }
-        });
-        // perform set on child click listener event
-        simpleExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
-                // display a toast with child name whenever a user clicks on a child item
-                Toast.makeText(getApplicationContext(), "Child Name Is :" + childItems[groupPosition], Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
+    /** Called when the user clicks the Send button */
+    public void sendMessage(View view) {
+        EditText editText = (EditText) findViewById(R.id.grocery_name);
+        String groceryName = editText.getText().toString();
+        editText = (EditText) findViewById(R.id.days);
+        Integer daysLeft = Integer.parseInt(editText.getText().toString());
+        groceryList.addGrocery(groceryName, daysLeft);
     }
 }
